@@ -1,4 +1,4 @@
-package org.example;
+package java.dai.client;
 
 public class Main {
     public static void main(String[] args) {
