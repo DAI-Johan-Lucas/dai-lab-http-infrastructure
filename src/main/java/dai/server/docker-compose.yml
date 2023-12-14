@@ -1,9 +1,31 @@
 version: '3.8'
+
+networks:
+  dai-net:
+    driver: bridge
+
 services:
   static-web-server:
     build: web
     ports:
       - "80:80"
+
+  postgresql:
+    image: 'bitnami/postgresql:16'
+    container_name: dai-lab-http-infrastructure
+    environment:
+      - POSTGRESQL_USERNAME=dai
+      - POSTGRESQL_PASSWORD=dai
+      - POSTGRESQL_DATABASE=dai
+      - POSTGRESQL_POSTGRES_PASSWORD=root
+    ports:
+      - "55055:55055"
+    volumes:
+      - .:/data:ro
+    networks:
+      - dai-net
+
+
 #  api-server: # Verify if ok :
 #    build: api
 #    ports:
