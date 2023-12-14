@@ -4,6 +4,7 @@ import io.javalin.http.Context;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class PersonController {
@@ -20,6 +21,9 @@ public class PersonController {
 //        }
     }
     public void getOne(Context ctx) {
+        Person p = new Person("john", "Doe", new Date(345323), "0794532123",
+                new Address(1, "steet", "1456", "modern city", "Suisse"));
+        ctx.json(p);
 //        try {
 //            ResultSet rs = Database.executeQuery("SELECT * FROM employe WHERE idlogin = '" + ctx.pathParam("idlogin") + "'");
 //            rs.next();
