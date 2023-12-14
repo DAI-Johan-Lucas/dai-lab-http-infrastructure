@@ -19,7 +19,7 @@ services:
       - POSTGRESQL_DATABASE=dai
       - POSTGRESQL_POSTGRES_PASSWORD=root
     ports:
-      - "55055:55055"
+      - "5432:5432"
     volumes:
       - .:/data:ro
     networks:
