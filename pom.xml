@@ -25,7 +25,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>dai.API.Api</mainClass>
+                            <mainClass>server.API.Api</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
