@@ -24,11 +24,3 @@ services:
       - .:/data:ro
     networks:
       - dai-net
-
-
-#  api-server: # Verify if ok :
-#    build: api
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - db
