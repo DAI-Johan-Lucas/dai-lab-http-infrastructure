@@ -9,6 +9,7 @@ public class Person {
     private String phone;
     private Address address;
 
+    public Person(){ }
 
     public Person(String firstname, String lastname, Date birthdate, String phone, Address address) {
         this.firstname = firstname;
@@ -16,5 +17,25 @@ public class Person {
         this.birthdate = birthdate;
         this.phone = phone;
         this.address = address;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }
