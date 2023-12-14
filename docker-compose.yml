@@ -6,7 +6,7 @@ networks:
 
 services:
   static-web-server:
-    build: web
+    build: src/main/java/server/web
     ports:
       - "80:80"
 
@@ -24,3 +24,10 @@ services:
       - .:/data:ro
     networks:
       - dai-net
+
+  api:
+    #image: server-1.0-jar-with-dependencies.jar
+    build:
+      context: src/main/java/server/API
+    ports:
+      - "7000:7000"
