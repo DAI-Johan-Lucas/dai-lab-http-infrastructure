@@ -7,12 +7,13 @@ CREATE SCHEMA family;
 SET search_path TO family;
 
 CREATE TABLE person (
-    firstname VARCHAR(30),
+    id INTEGER,
+    firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
     birthdate DATE,
     phone VARCHAR(30),
     FK_address INTEGER,
-    PRIMARY KEY (firstname)
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE address (

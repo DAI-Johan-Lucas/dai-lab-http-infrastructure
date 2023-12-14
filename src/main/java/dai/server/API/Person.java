@@ -3,20 +3,26 @@ package dai.server.API;
 import java.sql.Date;
 
 public class Person {
+    private int id;
     private String firstname;
     private String lastname;
     private Date birthdate;
     private String phone;
-    private Address address;
+    private int fk_address;
 
     public Person(){ }
 
-    public Person(String firstname, String lastname, Date birthdate, String phone, Address address) {
+    public Person(int id, String firstname, String lastname, Date birthdate, String phone, int address) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
         this.phone = phone;
-        this.address = address;
+        this.fk_address = address;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstname() {
@@ -35,7 +41,7 @@ public class Person {
         return phone;
     }
 
-    public Address getAddress() {
-        return address;
+    public int getAddress() {
+        return fk_address;
     }
 }

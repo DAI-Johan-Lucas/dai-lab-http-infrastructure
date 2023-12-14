@@ -10,10 +10,10 @@ SET SEARCH_PATH TO family;
 --
 -- Dumping data for table person
 --
-INSERT INTO person VALUES('John', 'Doe', '1981-06-19', '+41 111 22 33', 1);
-INSERT INTO person VALUES('Mark', 'Grayson', '2000-01-05', '+41 666 23 31', 2);
-INSERT INTO person VALUES('Kalye', 'Huston', '1987-09-11', '+41 321 45 67', 3);
-INSERT INTO person VALUES('Bob', 'Huston', '1988-11-09', '+41 123 54 76', 3);
+INSERT INTO person VALUES(1, 'John', 'Doe', '1981-06-19', '+41 111 22 33', 1);
+INSERT INTO person VALUES(2, 'Mark', 'Grayson', '2000-01-05', '+41 666 23 31', 2);
+INSERT INTO person VALUES(3, 'Kalye', 'Huston', '1987-09-11', '+41 321 45 67', 3);
+INSERT INTO person VALUES(4, 'Bob', 'Huston', '1988-11-09', '+41 123 54 76', 3);
 
 INSERT INTO address VALUES(1, 'Rue de la Gare 1', '1000', 'Lausanne', 'Switzerland');
 INSERT INTO address VALUES(2, 'Avenue du chapiteau 5', '1400', 'Yverdon-les-Bains', 'Switzerland');
