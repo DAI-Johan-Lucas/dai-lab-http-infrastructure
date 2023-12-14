@@ -1,7 +1,7 @@
-package dai.server.API.data;
+package API.data;
 
-import dai.server.API.Database;
-import dai.server.API.data.Person;
+import API.Database;
+import API.data.Person;
 import io.javalin.http.Context;
 
 import java.sql.ResultSet;
@@ -24,9 +24,6 @@ public class PersonController {
         }
     }
     public void getOne(Context ctx) {
-//        Person p = new Person("john", "Doe", new Date(345323), "0794532123",
-//                new Address(1, "steet", "1456", "modern city", "Suisse"));
-//        ctx.json(p);
         try {
             ResultSet rs = Database.executeQuery("SELECT * FROM person WHERE id = '" + ctx.pathParam("id") + "'");
             rs.next();

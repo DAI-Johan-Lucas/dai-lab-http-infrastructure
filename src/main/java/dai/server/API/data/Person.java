@@ -1,4 +1,4 @@
-package dai.server.API.data;
+package API.data;
 
 import java.sql.Date;
 

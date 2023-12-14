@@ -1,10 +1,18 @@
-package dai.server.API;
+package API;
 
-import dai.server.API.data.PersonController;
+import API.data.PersonController;
 import io.javalin.*;
+import io.javalin.plugin.bundled.CorsPluginConfig;
 
 public class Api {
     public static void main(String[] args) {
+//        Javalin app = Javalin.create(config -> {
+//            config.plugins.enableCors(cors -> {
+//                cors.add(CorsPluginConfig::anyHost);
+//            });
+//        });
+//        app.start(7000);
+
         Javalin app = Javalin.create().start(7000);
         PersonController userController = new PersonController();
         app.get("/api/persons", userController::getAll);

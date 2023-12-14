@@ -1,4 +1,4 @@
-package dai.server.API.data;
+package API.data;
 
 public class Address {
     private int id;

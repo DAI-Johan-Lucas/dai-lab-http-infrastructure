@@ -1,4 +1,4 @@
-package dai.server.API;
+package API;
 
 import java.sql.*;
 
