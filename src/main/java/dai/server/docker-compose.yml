@@ -4,9 +4,9 @@ services:
     build: web
     ports:
       - "80:80"
-  api-server: # Verify if ok :
-    build: api
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
+#  api-server: # Verify if ok :
+#    build: api
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
