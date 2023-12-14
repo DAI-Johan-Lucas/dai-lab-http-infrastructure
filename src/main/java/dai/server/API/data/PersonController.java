@@ -1,10 +1,11 @@
-package dai.server.API;
+package dai.server.API.data;
 
+import dai.server.API.Database;
+import dai.server.API.data.Person;
 import io.javalin.http.Context;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 public class PersonController {
