@@ -28,6 +28,6 @@ services:
   api:
     #image: server-1.0-jar-with-dependencies.jar
     build:
-      context: src/main/java/server/API
+      context: .
     ports:
       - "7000:7000"

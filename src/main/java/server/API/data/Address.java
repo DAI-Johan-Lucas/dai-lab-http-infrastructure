@@ -1,4 +1,4 @@
-package API.data;
+package server.API.data;
 
 public class Address {
     private int id;

@@ -1,8 +1,8 @@
-package API;
+package server.API;
 
-import API.data.PersonController;
 import io.javalin.*;
 import io.javalin.plugin.bundled.CorsPluginConfig;
+import server.API.data.PersonController;
 
 public class Api {
     public static void main(String[] args) {

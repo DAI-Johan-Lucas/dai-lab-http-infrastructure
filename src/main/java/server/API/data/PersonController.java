@@ -1,15 +1,14 @@
-package API.data;
+package server.API.data;
 
-import API.Database;
-import API.data.Person;
 import io.javalin.http.Context;
+import server.API.Database;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonController {
-    private List<Person> family = new ArrayList<Person>();
+    private List<Person> family = new ArrayList<>();
     public void getAll(Context ctx) {
         try {
             ResultSet rs = Database.executeQuery("SELECT * FROM person");

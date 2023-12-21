@@ -1,11 +1,11 @@
-package API;
+package server.API;
 
 import java.sql.*;
 
 public class Database {
-    private static final String DATABASE_URL = "jdbc:postgresql://host.docker.internal:55055/dai?currentSchema=dai-lab-http-infrastructure";
-    private static final String DATABASE_USER = "server";
-    private static final String DATABASE_PASSWORD = "server";
+    private static final String DATABASE_URL = "jdbc:postgresql://host.docker.internal:5432/dai?currentSchema=family";
+    private static final String DATABASE_USER = "dai";
+    private static final String DATABASE_PASSWORD = "dai";
 
     private static Connection connection;
 
