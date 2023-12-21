@@ -34,7 +34,7 @@ Pour lancer le docker compose en mode détaché / l'éteindre :
 
 Ou alors le faire depuis l'application Docker Desktop.
 
-## STEP 2 :
+## STEP 3 :
 
 #### Création de la base de données
 
@@ -93,8 +93,22 @@ Nous avons ensuite créé une classe pour chaque table de notre base de données
 ainsi qu'une classe "PersonController" qui se charge de faire le lien entre notre API et notre base de données via
 des requêtes SQL.
 
-Pour finir, nous avons créé une classe "Api" qui se charge de lancer notre API sur le port 7000.
+Puis, nous avons créé une classe "Api" qui se charge de lancer notre API sur le port 7000.
 Elle indique également les routes disponibles pour effectuer des requêtes.
+
+Finalement, pour établir le service API, il nous reste à créer le service dans le docker-compose.yml :
+
+```
+  api:
+    build:
+      context: .
+    ports:
+      - "7000:7000"
+```
+
+Ainsi qu'à créer le Dockerfile que nous avons décidé de placer à la racine du projet afin qu'il ait accès au projet
+compilé.
+Nous avons utilisé l'image `eclipse-temurin:21-alpine` qui utilise le port 7000.
 
 #### Vérification avec Bruno
 

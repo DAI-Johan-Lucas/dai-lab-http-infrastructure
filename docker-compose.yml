@@ -26,7 +26,6 @@ services:
       - dai-net
 
   api:
-    #image: server-1.0-jar-with-dependencies.jar
     build:
       context: .
     ports:
