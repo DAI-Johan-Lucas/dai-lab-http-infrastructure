@@ -10,6 +10,13 @@ services:
     ports:
       - "80:80"
 
+  java-server:
+    image: dai-lab-http-infrastructure-1.0-jar-with-dependencies.jar
+    expose:
+      - 80
+    build:
+      context: .
+
   postgresql:
     image: 'bitnami/postgresql:16'
     container_name: dai-lab-http-infrastructure
