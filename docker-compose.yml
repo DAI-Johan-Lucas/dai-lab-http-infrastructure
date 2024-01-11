@@ -5,17 +5,16 @@ networks:
     driver: bridge
 
 services:
-  static-web-server:
-    build: src/main/java/server/web
-    ports:
-      - "80:80"
+#  static-web-server:
+#    build: src/main/java/server/web
+#    ports:
+#      - "80:80"
 
-  java-server:
-    image: dai-lab-http-infrastructure-1.0-jar-with-dependencies.jar
-    expose:
-      - 80
-    build:
-      context: .
+#  api:
+#    build:
+#      context: .
+#    ports:
+#      - "7000:7000"
 
   postgresql:
     image: 'bitnami/postgresql:16'
@@ -32,8 +31,37 @@ services:
     networks:
       - dai-net
 
-  api:
+  reverse-proxy:
+    image: traefik
+    command:
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80" # Web sites
+      - "8080:8080" # Traefik dashboard
+
+  java-server:
+    image: dai-lab-http-infrastructure-1.0-jar-with-dependencies.jar
+    expose:
+      - 80
     build:
       context: .
-    ports:
-      - "7000:7000"
+    labels:
+      - traefik.http.routers.java-server.rule=Host(`localhost`) && PathPrefix(`/api`)
+#      - traefik.http.routers.java-server.entrypoints=https
+#      - traefik.http.routers.java-server.tls=true
+      - traefik.http.services.javaserver.loadbalancer.sticky=true
+      - traefik.http.services.javaserver.loadbalancer.sticky.cookie.name=StickyCookie
+      - traefik.http.services.javaserver.loadbalancer.sticky.cookie.secure=true
+    deploy:
+      replicas: 1
+
+  static-web-server:
+    build: nginx
+    labels:
+      - traefik.http.routers.static-web-server.rule=Host(`localhost`)
+#      - traefik.http.routers.static-web-server.entrypoints=https
+#      - traefik.http.routers.static-web-server.tls=true
+    deploy:
+      replicas: 1
