@@ -58,7 +58,7 @@ public class PersonController {
             String sql = "UPDATE person SET firstname = '" + person.firstname + "', lastname = '" + person.lastname
                     + "', birthdate = '" + person.birthdate + "', phone = '" + person.phone
                     + "', fk_address = '" + person.fk_address
-                    + " WHERE id = '" + ctx.pathParam("id") + "'";
+                    + "' WHERE id = '" + ctx.pathParam("id") + "'";
             int affectedRows = Database.executeUpdate(sql);
             if (affectedRows > 0) {
                 ctx.status(204);
