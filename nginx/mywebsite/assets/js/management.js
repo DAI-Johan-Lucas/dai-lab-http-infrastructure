@@ -1,26 +1,43 @@
-// Fonction pour récupérer les données depuis l'API
 function fetchDataPerson() {
-    fetch('http://localhost:7000/api/persons')
+    fetch('http://localhost/api/persons')
         .then(response => response.json())
         .then(data => {
             populateTable(data);
         })
         .catch(error => {
-            console.error('Error can\'t fetch data:', error);
+            console.error('Error can\'t fetch persons:', error);
         });
 }
 
-// Fonction pour remplir le tableau avec les données JSON
+function populateAddressDropdown() {
+    fetch('http://localhost/api/addresses')
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById('Address');
+
+            dropdown.innerHTML = '';
+
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.text = item.street + ' ' + item.npa + ', ' + item.city + ' ' + item.country;
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error can\'t fetch addresses:', error);
+        });
+}
+
 function populateTable(data) {
-    const tableHeaders = document.getElementById('tableHeaders');
     const tableBody = document.getElementById('tableBody');
 
-    tableHeaders.innerHTML = '';
     tableBody.innerHTML = '';
 
     if (data.length > 0) {
         // Parcourt les données et ajoute chaque entrée dans le tableau
         data.forEach(item => {
+            const headers = Object.keys(data[0]);
             const row = tableBody.insertRow();
             headers.forEach(header => {
                 const cell = row.insertCell();
@@ -31,16 +48,6 @@ function populateTable(data) {
                 }
                 cell.setAttribute('data-title', header);
             });
-
-            // Modify button
-            const editCell = row.insertCell();
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Modify';
-            editButton.onclick = function() {
-                const idToEdit = item.id;
-                window.location.href = `create.html?id=${idToEdit}`;
-            };
-            editCell.appendChild(editButton);
 
             // Delete button
             const deleteCell = row.insertCell();
@@ -56,7 +63,7 @@ function populateTable(data) {
 }
 
 function deleteElementById(id) {
-    fetch(`http://localhost:7000/api/persons/${id}`, {
+    fetch(`http://localhost/api/persons/${id}`, {
         method: 'DELETE',
     })
         .then(response => {
@@ -72,10 +79,6 @@ function deleteElementById(id) {
         });
 }
 
-window.onload = function() {
-    fetchDataPerson();
-};
-
 window.onscroll = function() {
     var navbar = document.querySelector('.navbar');
     if (window.pageYOffset > 50) {
@@ -85,41 +88,31 @@ window.onscroll = function() {
     }
 };
 
-function submitUpdateEmployeeForm() {
+function submitPerson() {
     // Récupérer les valeurs du formulaire
-    const loginId = document.getElementById('loginId').value;
-    const password = document.getElementById('password').value;
-    const nom = document.getElementById('nom').value;
-    const prenom = document.getElementById('prenom').value;
-    const dob = document.getElementById('dob').value;
-    const contractStartDate = document.getElementById('contractStartDate').value;
-    const fonction = document.getElementById('fonction').value;
-    const phone = document.getElementById('phone').value;
-    const licenseType = document.getElementById('licenseType').value;
-    const adresse = document.getElementById('adresse').value;
-    const decheterie = document.getElementById('decheterie').value;
+    const id = document.getElementById('ID').value;
+    const firstname = document.getElementById('First').value;
+    const lastname = document.getElementById('Last').value;
+    const birthdate = document.getElementById('Birthday').value;
+    const phone = document.getElementById('Phone').value;
+    const fk_address = document.getElementById('Address').value;
 
     // Créer un objet avec les valeurs
     const data = {
-        idlogin: loginId,
-        mdplogin: password,
-        nom: nom,
-        prenom: prenom,
-        datenaissance: dob,
-        datedebutcontrat: contractStartDate,
-        fonction: fonction,
-        numtelephone: phone,
-        typepermis: licenseType,
-        fk_adresse: adresse,
-        fk_decheterie: decheterie
+        id: id,
+        firstname: firstname,
+        lastname: lastname,
+        birthdate: birthdate,
+        phone: phone,
+        fk_address: fk_address
     };
 
     // Convertir l'objet en JSON
     const json = JSON.stringify(data);
 
-    // Envoyer une requête PUT à l'API
-    fetch('https://localhost/api/employes/' + loginId, {
-        method: 'PUT',
+    // Envoyer une requête POST à l'API
+    fetch('http://localhost/api/persons', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -127,14 +120,22 @@ function submitUpdateEmployeeForm() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
             }
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
+            if (data) {
+                console.log('Success:', data);
+                window.location.href = 'index.html';
+                alert('The member has been successfully created.');
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
+            alert('Error has occured during the creation.\n' + error.message);
         });
+
 }

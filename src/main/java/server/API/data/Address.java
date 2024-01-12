@@ -1,11 +1,11 @@
 package server.API.data;
 
 public class Address {
-    private int id;
-    private String street;
-    private String npa;
-    private String city;
-    private String country;
+    public int id;
+    public String street;
+    public String npa;
+    public String city;
+    public String country;
 
     public Address() { }
 
@@ -15,25 +15,5 @@ public class Address {
         this.npa = npa;
         this.city = city;
         this.country = country;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getNpa() {
-        return npa;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
     }
 }

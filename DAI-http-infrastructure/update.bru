@@ -5,7 +5,18 @@ meta {
 }
 
 patch {
-  url: http://localhost:7000/api/persons/1
-  body: none
+  url: http://localhost/api/persons/1
+  body: json
   auth: none
+}
+
+body:json {
+  {
+      "id": 20,
+      "firstname": "Marcel",
+      "lastname": "Wick",
+      "birthdate": "1960-01-20",
+      "phone": "+41 111 22 33",
+      "fk_address": 2
+  }
 }

@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonController {
-    private List<Person> family = new ArrayList<>();
     public void getAll(Context ctx) {
+        List<Person> family = new ArrayList<>();
+
         try {
             ResultSet rs = Database.executeQuery("SELECT * FROM person");
             while (rs.next()) {
@@ -37,9 +38,9 @@ public class PersonController {
     public void create(Context ctx) {
         try {
             Person person = ctx.bodyAsClass(Person.class);
-            String sql = "INSERT INTO person VALUES ('" + person.getId() + "', '" + person.getFirstname()
-                    + "', '" + person.getLastname() + "', '" + person.getBirthdate() + "', '" + person.getPhone()
-                    + "', '" + person.getAddress() + ")";
+            String sql = "INSERT INTO person VALUES ('" + person.id + "', '" + person.firstname + "', '"
+                    + person.lastname + "', '" + person.birthdate + "', '" + person.phone + "', '"
+                    + person.fk_address + "')";
             int affectedRows = Database.executeUpdate(sql);
             if (affectedRows > 0) {
                 ctx.status(201);
@@ -54,9 +55,9 @@ public class PersonController {
     public void update(Context ctx) {
         try {
             Person person = ctx.bodyAsClass(Person.class);
-            String sql = "UPDATE person SET firstname = '" + person.getFirstname()
-                    + "', lastname = '" + person.getLastname() + "', birthdate = '" + person.getBirthdate()
-                    + "', phone = '" + person.getPhone() + "', fk_address = '" + person.getAddress()
+            String sql = "UPDATE person SET firstname = '" + person.firstname + "', lastname = '" + person.lastname
+                    + "', birthdate = '" + person.birthdate + "', phone = '" + person.phone
+                    + "', fk_address = '" + person.fk_address
                     + " WHERE id = '" + ctx.pathParam("id") + "'";
             int affectedRows = Database.executeUpdate(sql);
             if (affectedRows > 0) {
