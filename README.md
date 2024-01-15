@@ -161,3 +161,29 @@ Puis pour notre API, nous aurons le label suivant :
 
 Cela permettra de rediriger les requêtes sur le port 80 vers le port 80 de notre site web static, et les requêtes sur
 le port 80/api vers le port 7000 de notre API.
+
+## STEP 5 :
+
+#### Load balancing et scalabilité :
+
+Pour permettre à docker compose de lancer plusieurs instances de nos services, nous avons ajouté les lignes suivantes
+dans le fichier docker-compose.yml :
+```
+    <NomService>:
+        image: <Image>
+        ...
+    deploy:
+      replicas: <NombreInstance>
+```
+"deploy" et "replicas" permettent ainsi de directement lancer un nombre choisi d'instances au démarrage.
+
+Pour changement dynamiquement le nombre d'instances de nos conteneurs, il nous faut utiliser la commande ci-dessous :
+```
+docker compose up -d --scale <NomDuService>=<NombreInstances>
+```
+Exemple :
+```
+docker compose up -d -- scale static-web-server=3 --scale java-server=5
+```
+
+Cela permet de changer en temps réel le nombre d'instances de nos serveurs sans avoir à relancer notre docker.

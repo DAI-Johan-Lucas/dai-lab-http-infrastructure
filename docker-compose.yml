@@ -56,3 +56,5 @@ services:
     build: nginx
     labels:
       - traefik.http.routers.static-web-server.rule=Host(`localhost`)
+    deploy:
+      replicas: 1
