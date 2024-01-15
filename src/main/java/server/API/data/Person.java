@@ -1,13 +1,17 @@
 package server.API.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.sql.Date;
 
 public class Person {
+    @JsonIgnoreProperties(ignoreUnknown = true)
     private int id;
     private String firstname;
     private String lastname;
     private Date birthdate;
     private String phone;
+    @JsonIgnoreProperties(ignoreUnknown = true)
     private int fk_address;
 
     public Person(){ }

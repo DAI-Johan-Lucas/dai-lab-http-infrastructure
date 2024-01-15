@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonController {
-    private List<Person> family = new ArrayList<>();
+    private final List<Person> family = new ArrayList<>();
     public void getAll(Context ctx) {
-        try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM person");
+        try(ResultSet rs = Database.executeQuery("SELECT * FROM person")) {
             while (rs.next()) {
                 family.add(new Person(rs.getInt("id"), rs.getString("firstname"),
                         rs.getString("lastname"), rs.getDate("birthdate"),
@@ -23,8 +22,7 @@ public class PersonController {
         }
     }
     public void getOne(Context ctx) {
-        try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM person WHERE id = '" + ctx.pathParam("id") + "'");
+        try (ResultSet rs = Database.executeQuery("SELECT * FROM person WHERE id = '" + ctx.pathParam("id") + "'")){
             rs.next();
             Person person = new Person(rs.getInt("id"), rs.getString("firstname"),
                     rs.getString("lastname"), rs.getDate("birthdate"),
@@ -37,7 +35,7 @@ public class PersonController {
     public void create(Context ctx) {
         try {
             Person person = ctx.bodyAsClass(Person.class);
-            String sql = "INSERT INTO person VALUES ('" + person.getId() + "', '" + person.getFirstname()
+            String sql = "INSERT INTO person VALUES ('" + person.getFirstname()
                     + "', '" + person.getLastname() + "', '" + person.getBirthdate() + "', '" + person.getPhone()
                     + "', '" + person.getAddress() + ")";
             int affectedRows = Database.executeUpdate(sql);
