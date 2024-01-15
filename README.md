@@ -187,3 +187,13 @@ docker compose up -d -- scale static-web-server=3 --scale java-server=5
 ```
 
 Cela permet de changer en temps réel le nombre d'instances de nos serveurs sans avoir à relancer notre docker.
+
+## STEP 6 :
+
+#### Sticky session :
+
+Pour préciser à notre programme que l'on souhaite utiliser le load balancing avec sticky session, il suffit d'ajouter
+des labels traefik sur les services voulus :
+```
+      - traefik.http.services.javaserver.loadbalancer.sticky=true
+      - traefik.http.services.javaserver.loadbalancer.sticky.cookie.name=StickyCookie
