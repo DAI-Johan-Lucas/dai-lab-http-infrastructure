@@ -26,11 +26,8 @@ services:
       - POSTGRESQL_POSTGRES_PASSWORD=root
     ports:
       - "5432:5432"
-    build:
-      context: ./src/main/java/server/sql
-      dockerfile: db.Dockerfile
     volumes:
-      - .:/data:ro
+      - .:/docker-entrypoint-initdb.d
     networks:
       - dai-net
 
