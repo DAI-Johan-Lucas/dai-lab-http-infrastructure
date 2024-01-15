@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <title>List of User</title>
+   
+  </head>
+  <body class="d-flex flex-column h-100">
+    
+    <div class="container pt-4 pb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <a class="navbar-brand" href="index.html">My Family</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample09">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Members</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create.html">Add<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faq.html">FAQ</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+        
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <h1>Create New User</h1>
+            <form action="" onsubmit="event.preventDefault(); submitPerson()">
+                <div class="form-group">
+                    <label for="ID">ID<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="ID" placeholder="ID" required>
+                    <small class="form-text text-muted">It must be unique</small>
+                    <label for="First">First<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="First" placeholder="firstname" required>
+                    <label for="Last">Last<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="Last" placeholder="lastname" required>
+                    <label for="Birthday">Birthday</label>
+                    <input type="date" class="form-control" id="Birthday">
+                    <label for="Phone">Phone</label>
+                    <input type="text" class="form-control" id="Phone" placeholder="phone number">
+                    <label for="Address">Address</label>
+                    <select id="Address" name="Address">
+                        <!-- Les options seront ajoutées ici dynamiquement -->
+                    </select>
+                </div>
+                <div class="row mb-3"></div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-6 d-flex justify-content-between">
+                        <button class="btn-block btn-primary " type="submit" id="Add" >Add</button>
+                        <button class="btn-block btn-primary " onclick="onClickCancelAdd()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container pb-5">
+            <hr>
+            <span class="text-muted">
+                    Authors:   Lucas Hussain / Johan Mikami
+            </span>
+            <br>
+            <span class="text-muted">
+                    DAI   LAB-HTTP-Infrastructure   2023-2024
+            </span>
+        </div>
+    </footer>
+
+
+    <script src="assets/js/management.js"></script>
+    <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#address').select2();
+            populateAddressDropdown();
+        });
+
+        function onClickCancelAdd() {
+            window.location.href = 'index.html';
+        }
+
+    </script>
+  </body>
+</html>

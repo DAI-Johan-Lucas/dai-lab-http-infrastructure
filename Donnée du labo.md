@@ -117,15 +117,23 @@ Once you're finished with the implementation, create a Dockerfile for the API se
 Step 4: Reverse proxy with Traefik
 ----------------------------------
 
-The goal of this step is to place a reverse proxy in front of the dynamic and static Web servers such that the reverse proxy receives all connections and relays them to the respective Web server. 
+The goal of this step is to place a reverse proxy in front of the dynamic and static Web servers such that the reverse 
+proxy receives all connections and relays them to the respective Web server. 
 
-You will use [Traefik](https://traefik.io/traefik/) as a reverse proxy. Traefik interfaces directly with Docker to obtain the list of active backend servers. This means that it can dynamically adjust to the number of running server. Traefik has the particularity that it can be configured using labels in the docker compose file. This means that you do not need to write a configuration file for Traefik, but Traefik will read container configurations from the docker engine through the file `/var/run/docker.sock`.
+You will use [Traefik](https://traefik.io/traefik/) as a reverse proxy. Traefik interfaces directly with Docker 
+to obtain the list of active 
+backend servers. This means that it can dynamically adjust to the number of running server. Traefik has the 
+particularity that it can be configured using labels in the docker compose file. This means that you do not need to 
+write a configuration file for Traefik, but Traefik will read container configurations from the docker engine through 
+the file `/var/run/docker.sock`.
 
 The steps to follow for this section are thus:
 
 - Add a new service "reverse_proxy" to your docker compose file using the Traefik docker image
-- Read the [Traefik Quick Start](https://doc.traefik.io/traefik/getting-started/quick-start/) documentation to establish the basic configuration.
-- Read the [Traefik & Docker](https://doc.traefik.io/traefik/routing/providers/docker/) documentation to learn how to configure Traefik to work with Docker.
+- Read the [Traefik Quick Start](https://doc.traefik.io/traefik/getting-started/quick-start/) documentation 
+- to establish the basic configuration.
+- Read the [Traefik & Docker](https://doc.traefik.io/traefik/routing/providers/docker/) documentation 
+- to learn how to configure Traefik to work with Docker.
 - Then implement the reverse proxy:
   - relay the requests coming to "localhost" to the static HTTP server
   - relay the requests coming to "localhost/api" to the API server. See the [Traefik router documentation](https://doc.traefik.io/traefik/routing/routers/) for managing routes based on path prefixes. 

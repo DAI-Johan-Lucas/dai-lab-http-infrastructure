@@ -126,3 +126,38 @@ projet puis nous avons créé une requête pour chaque route de notre API :
 - **delete** : http://localhost:7000/api/persons/{id}
 
 Ceci permet de vérifier que nous pouvons bien obtenir nos données ainsi que les modifier/supprimer.
+
+## STEP 4 :
+
+#### Mise en plase de Traefik :
+
+Pour mettre en place le service traefik ainsi que les futures fonctionnalités qui vont avec 
+(reverse proxy, load balancing, ...), nous avons tout d'abord inséré un nouveau service dans notre docker-compose.yml
+
+```
+  reverse-proxy:
+    image: traefik
+    command:
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80" # Web sites
+      - "8080:8080" # Traefik dashboard
+```
+
+Une fois cela fait, nous allons pouvoir ajouter des labels sur nos services existants afin de pouvoir faire des
+redirections de certaines requêtes sur les services voulus.
+
+Pour notre site web static, nous aurons donc le label suivant :
+```
+- traefik.http.routers.static-web-server.rule=Host(`localhost`)
+```
+
+Puis pour notre API, nous aurons le label suivant :
+```
+- traefik.http.routers.java-server.rule=Host(`localhost`) && PathPrefix(`/api`)
+```
+
+Cela permettra de rediriger les requêtes sur le port 80 vers le port 80 de notre site web static, et les requêtes sur
+le port 80/api vers le port 7000 de notre API.

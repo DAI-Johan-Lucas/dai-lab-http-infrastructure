@@ -4,8 +4,19 @@ meta {
   seq: 3
 }
 
-put {
-  url: http://localhost:7000/api/persons
-  body: none
+post {
+  url: http://localhost/api/persons
+  body: json
   auth: none
+}
+
+body:json {
+  {
+      "id": 22,
+      "firstname": "John",
+      "lastname": "Wick",
+      "birthdate": 361756800000,
+      "phone": "+41 666 22 33",
+      "fk_address": 1
+  }
 }
