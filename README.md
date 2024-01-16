@@ -286,3 +286,42 @@ nouveaux labels pour nos services "java-server" et "static-web-server" :
 **ATTENTION :** Étant maintenant passé à HTTPS, nous devons modifier toutes nos URL d'accès à l'API dans notre fichier
 management.js (qui communique avec notre API) :
 `http://localhost/api/persons` devient maintenant → `https://localhost/api/persons`
+
+## OPTIONNAL STEP 1 :
+
+...
+
+## OPTIONNAL STEP 2 :
+
+Pour ce projet, nous avons décidé d'implémenter une base de données SQL ainsi qu'un site web permettant d'afficher la
+liste des personnes et également un formulaire pouvant ajouter des personnes.
+
+Pour ce qui est de l'affichage de la liste, nous avons utilisé du JavaScript ("./nginx/mywebsite/assets/js/management.js") 
+qui va utiliser l'API afin de récupérer une liste de toutes les personnes et leurs informations.
+```javascript
+function fetchDataPerson() {
+    fetch('https://localhost/api/persons')
+        .then(response => response.json())
+        .then(data => {
+            populateTable(data);
+        })
+        .catch(error => {
+            console.error('Error can\'t fetch persons:', error);
+        });
+}
+```
+
+Notre script JS va ensuite automatiquement peupler un tableau en fonction des informations. Nous avons ajouté un
+bouton "Delete" à chaque ligne de notre tableau permettant de supprimer la ligne (la personne), de notre tableau
+et donc de notre base de donnée (Un script JS va encore une fois se servir de l'API pour communiquer avec la BDD).
+
+Lors du chargement de notre page, notre script JS va périodiquement appeler la fonction permettant d'afficher le
+tableau (et donc utiliser l'API pour une méthode GET).
+Ceci nous permet de rafraichir (toutes les 10 secondes) les données de notre tableau pour rester à jour face à de
+potentiels changements :
+```javascript
+window.onload = function() {
+    fetchDataPerson();
+    setInterval(fetchDataPerson, 10000); // cette ligne appelera la fonction toutes les 10s
+};
+```
