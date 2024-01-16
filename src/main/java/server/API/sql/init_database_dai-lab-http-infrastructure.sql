@@ -10,7 +10,7 @@ CREATE TABLE person (
     id INTEGER,
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
-    birthdate DATE,
+    birthdate DATE NOT NULL,
     phone VARCHAR(30),
     FK_address INTEGER,
     PRIMARY KEY (id)

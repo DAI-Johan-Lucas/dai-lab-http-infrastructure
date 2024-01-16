@@ -11,7 +11,8 @@ public class PersonController {
     public void getAll(Context ctx) {
         List<Person> family = new ArrayList<>();
 
-        try(ResultSet rs = Database.executeQuery("SELECT * FROM person")) {
+        try(ResultSet rs = Database.executeQuery("SELECT * FROM person ORDER BY id;")) {
+
             while (rs.next()) {
                 family.add(new Person(rs.getInt("id"), rs.getString("firstname"),
                         rs.getString("lastname"), rs.getDate("birthdate"),

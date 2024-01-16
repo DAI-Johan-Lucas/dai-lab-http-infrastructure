@@ -1,5 +1,5 @@
 function fetchDataPerson() {
-    fetch('http://localhost/api/persons')
+    fetch('https://localhost/api/persons')
         .then(response => response.json())
         .then(data => {
             populateTable(data);
@@ -10,7 +10,7 @@ function fetchDataPerson() {
 }
 
 function populateAddressDropdown() {
-    fetch('http://localhost/api/addresses')
+    fetch('https://localhost/api/addresses')
         .then(response => response.json())
         .then(data => {
             const dropdown = document.getElementById('Address');
@@ -63,7 +63,7 @@ function populateTable(data) {
 }
 
 function deleteElementById(id) {
-    fetch(`http://localhost/api/persons/${id}`, {
+    fetch(`https://localhost/api/persons/${id}`, {
         method: 'DELETE',
     })
         .then(response => {
@@ -111,7 +111,7 @@ function submitPerson() {
     const json = JSON.stringify(data);
 
     // Envoyer une requête POST à l'API
-    fetch('http://localhost/api/persons', {
+    fetch('https://localhost/api/persons', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -124,7 +124,8 @@ function submitPerson() {
                     throw new Error(text);
                 });
             }
-            return response.json();
+            //return response.json();
+            return response.text().then(text => text ? JSON.parse(text) : {});
         })
         .then(data => {
             if (data) {

@@ -282,3 +282,7 @@ nouveaux labels pour nos services "java-server" et "static-web-server" :
 - traefik.http.routers.java-server.entrypoints=https
 - traefik.http.routers.java-server.tls=true
 ```
+
+**ATTENTION :** Étant maintenant passé à HTTPS, nous devons modifier toutes nos URL d'accès à l'API dans notre fichier
+management.js (qui communique avec notre API) :
+`http://localhost/api/persons` devient maintenant → `https://localhost/api/persons`
