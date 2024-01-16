@@ -37,8 +37,11 @@ services:
       - --providers.docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      - ./traefik/certificates:/etc/traefik/certificates
     ports:
       - "80:80" # Web sites
+      - "443:443" # Web sites
       - "8080:8080" # Traefik dashboard
 
   java-server:
@@ -52,6 +55,8 @@ services:
       - traefik.http.services.javaserver.loadbalancer.sticky=true
       - traefik.http.services.javaserver.loadbalancer.sticky.cookie.name=StickyCookie
       - traefik.http.services.javaserver.loadbalancer.sticky.cookie.secure=true
+      - traefik.http.routers.java-server.entrypoints=https
+      - traefik.http.routers.java-server.tls=true
     deploy:
       replicas: 1
 
@@ -59,5 +64,7 @@ services:
     build: nginx
     labels:
       - traefik.http.routers.static-web-server.rule=Host(`localhost`)
+      - traefik.http.routers.static-web-server.entrypoints=https
+      - traefik.http.routers.static-web-server.tls=true
     deploy:
       replicas: 1

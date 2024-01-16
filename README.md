@@ -197,3 +197,88 @@ des labels traefik sur les services voulus :
 ```
       - traefik.http.services.javaserver.loadbalancer.sticky=true
       - traefik.http.services.javaserver.loadbalancer.sticky.cookie.name=StickyCookie
+```
+
+## STEP 7 :
+
+#### Génération certificats SSL :
+
+Nous nous sommes créé nos propres certificats grâce à OpenSSL, pour cela nous avons utilisé une VM kali linux (étant
+donné qu'openssl y est installé par défaut) et nous avons exécuté cette commande :
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+```
+Cela nous a créé deux fichiers "key.pem" ainsi que "cert.pem"
+
+#### Configuration traefik en HTTPS :
+
+Nous avons ensuite créé une nouvelle arborescence à la racine de notre projet, où nous avons déposé nos nouveaux
+fichiers :
+```
+traefik
+|_ certificates
+|  |_ cert.pem
+|  |_ key.pem
+|_ traefik.yaml
+```
+
+Le fichier traefik.yaml contiendra toutes les configurations nécessaires (notamment le chemin vers les certificats).
+Il faudra mettre ce fichier comme un volume pour notre service traefik (reverse_proxy) :
+```
+- ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+```
+Puis un autre volume pour préciser le chemin des certificats pour les conteneurs :
+```
+- ./traefik/certificates:/etc/traefik/certificates
+```
+
+Nous avons également ajouté le port 443 (qui correspond au protocole HTTPS) pour le service reverse_proxy.
+
+##### Traefik.yaml :
+
+Pour compléter la configuration, il nous faut ajouter dans le fichier "traefik.yaml" plusieurs choses :
+
+1. Les "providers" :
+```
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: true
+```
+
+2. Les entryPoints, où nous allons rediriger les connexions HTTP en HTTPS
+```
+entryPoints:
+  http:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+          permanent: true
+  https:
+    address: ":443"
+```
+
+3. Les certifical SSL/TLS, afin de préciser le chemin des certificats :
+```
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certificates/cert.pem"
+      keyFile: "/etc/traefik/certificates/key.pem"
+```
+
+4. Et finalement, l'API afin de rendre le dashboard accessible :
+```
+api:
+  insecure: true
+  dashboard: true
+```
+
+En parallèle, il nous faut ajouter les configurations HTTPS pour nos services, pour ce faire il faut préciser de
+nouveaux labels pour nos services "java-server" et "static-web-server" :
+```
+- traefik.http.routers.java-server.entrypoints=https
+- traefik.http.routers.java-server.tls=true
+```
