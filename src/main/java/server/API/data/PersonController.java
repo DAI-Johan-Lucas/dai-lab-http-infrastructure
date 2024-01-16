@@ -11,8 +11,7 @@ public class PersonController {
     public void getAll(Context ctx) {
         List<Person> family = new ArrayList<>();
 
-        try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM person");
+        try(ResultSet rs = Database.executeQuery("SELECT * FROM person")) {
             while (rs.next()) {
                 family.add(new Person(rs.getInt("id"), rs.getString("firstname"),
                         rs.getString("lastname"), rs.getDate("birthdate"),
@@ -24,8 +23,7 @@ public class PersonController {
         }
     }
     public void getOne(Context ctx) {
-        try {
-            ResultSet rs = Database.executeQuery("SELECT * FROM person WHERE id = '" + ctx.pathParam("id") + "'");
+        try (ResultSet rs = Database.executeQuery("SELECT * FROM person WHERE id = '" + ctx.pathParam("id") + "'")){
             rs.next();
             Person person = new Person(rs.getInt("id"), rs.getString("firstname"),
                     rs.getString("lastname"), rs.getDate("birthdate"),

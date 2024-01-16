@@ -27,7 +27,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - .:/data:ro
+      - .:/docker-entrypoint-initdb.d
     networks:
       - dai-net
 
