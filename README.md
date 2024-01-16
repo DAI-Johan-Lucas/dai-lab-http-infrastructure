@@ -289,7 +289,29 @@ management.js (qui communique avec notre API) :
 
 ## OPTIONNAL STEP 1 :
 
-...
+Pour la réalisation de ce point, nous avons décidé d'utiliser une application web existante qui se nomme "Portainer".
+
+Pour cela, nous avons ajouté un nouveau service dans notre fichier docker-compose.yml utilisant le port 9000 :
+```
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -H unix:///var/run/docker.sock
+```
+
+Nous lançons ensuite notre projet avec `docker composer up --build` et nous pourrons accéder à notre application sur
+l'URL "http://localhost:9000".
+
+Nous avons créé un nouvel utilisateur comme demandé :
+
+Name : admin
+Pass : 123456789000
+
+Puis, nous voilà connecté, nous pouvons gérer depuis cette application nos différents conteneurs/services comme l'on
+pourrait le faire depuis l'application "Docker Desktop".
 
 ## OPTIONNAL STEP 2 :
 
