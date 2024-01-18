@@ -297,6 +297,7 @@ Pour cela, nous avons ajouté un nouveau service dans notre fichier docker-compo
     image: portainer/portainer
     ports:
       - "9000:9000"
+      - "9443:9443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: -H unix:///var/run/docker.sock
